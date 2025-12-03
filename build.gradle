@@ -5,6 +5,23 @@ plugins {
     id 'idea'
 }
 
+repositories {
+    maven {
+        name = "NeoForged"
+        url = "https://maven.neoforged.net/releases"
+    }
+    // Альтернативные репозитории
+    maven {
+        name = "Architectury"
+        url = "https://maven.architectury.dev"
+    }
+    maven {
+        name = "ParchmentMC"
+        url = "https://maven.parchmentmc.org"
+    }
+    mavenCentral()
+}
+
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
     // Switching this to Wrapper.DistributionType.ALL will download the full gradle sources that comes with
@@ -12,6 +29,17 @@ tasks.named('wrapper', Wrapper).configure {
     // file size for Gradle. If you do switch this to ALL, run the Gradle wrapper task twice afterwards.
     // (Verify by checking gradle/wrapper/gradle-wrapper.properties to see if distributionUrl now points to `-all`)
     distributionType = Wrapper.DistributionType.BIN
+}
+
+tasks.named('createMinecraftArtifacts') {
+    enabled = false
+    doFirst {
+        println "================================================================================"
+        println "ЗАДАЧА createMinecraftArtifacts ОТКЛЮЧЕНА!"
+        println "Если она вам нужна для разработки Minecraft ядра - включите обратно."
+        println "Для сборки модпака она обычно не требуется."
+        println "================================================================================"
+    }
 }
 
 version = mod_version
