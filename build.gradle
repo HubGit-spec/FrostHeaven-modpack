@@ -1,168 +1,36 @@
 plugins {
-    id 'java-library'
+    id 'java'
     id 'net.neoforged.moddev' version '2.0.116'
 }
 
-println("Ы")
-
-version = mod_version
-group = mod_group_id
-base.archivesName = mod_id
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-// ТОЛЬКО локальный репозиторий - убираем ВСЕ maven
-repositories {
-    flatDir {
-        name 'localLibs'
-        dirs 'libs'
-    }
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
-// ПРОСТОЙ способ - отключаем сетевые проверки
-configurations.all {
-    exclude group: 'net.neoforged', module: 'minecraft-dependencies'
+repositories {
+    flatDir { dirs 'libs' }
 }
 
 dependencies {
-    // 1. NeoForm runtime - КРИТИЧЕСКИ ВАЖНО
     neoFormRuntimeTool files('libs/neoform-runtime-1.0.43-all.jar')
-
-    // 2. ВСЕ остальные файлы как обычные зависимости
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.zip'])
-}
-
-// Специально для neoFormRuntimeExternalTools конфигурации
-configurations.configureEach { config ->
-    if (config.name.contains('neoForm') || config.name.contains('Runtime')) {
-        // Добавляем файлы к этим специфичным конфигурациям
-        config.dependencies.add(dependencies.create(files(
-                'libs/jst-cli-bundle-1.0.74.jar',
-                'libs/mergetool-1.1.7-fatjar.jar',
-                'libs/Quack-0.4.10.101.jar',
-                'libs/fastutil-8.3.1.jar',
-                'libs/commons-lang3-3.9.jar',
-                'libs/commons-compress-1.18.jar',
-                'libs/xz-1.8.jar',
-                'libs/asm-9.5.jar',
-                'libs/asm-commons-9.5.jar',
-                'libs/asm-tree-9.5.jar',
-                'libs/asm-util-9.5.jar',
-                'libs/asm-analysis-9.5.jar',
-                'libs/srgutils-0.4.15.jar',
-                'libs/DiffPatch-2.0.0.36-all.jar'
-        )))
-    }
+    implementation fileTree('libs')
 }
 
 neoForge {
-    version = project.neo_version
-
-    // Отключаем ВСЕ автоматические загрузки
-    autoDownloadJavaToolchain = false
-
-    // Если используете parchment - укажите, что файл локальный
-    if (project.hasProperty('parchment_mappings_version')) {
-        parchment {
-            mappingsVersion = project.parchment_mappings_version
-            minecraftVersion = project.parchment_minecraft_version
-        }
-    }
+    version = '21.0.0-beta'
 
     runs {
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
-            // КРИТИЧЕСКИ ВАЖНЫЕ настройки офлайн
-            systemProperty 'neoform.offline', 'true'
-            systemProperty 'jst.offline', 'true'
-            systemProperty 'gradle.offline', 'true'
-        }
-
         client {
             client()
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        server {
-            server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        data {
-            data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output',
-                    file('src/generated/resources/').getAbsolutePath(), '--existing',
-                    file('src/main/resources/').getAbsolutePath()
-        }
-    }
-
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
+            systemProperty 'neoform.offline', 'true'
+            systemProperty 'jst.offline', 'true'
         }
     }
 }
 
-// ========== ВАЖНО: Отключаем задачу createMinecraftArtifacts ==========
-gradle.startParameter.excludedTaskNames += ['createMinecraftArtifacts']
-
-// Альтернативно - в коде
-tasks.whenTaskAdded { task ->
-    if (task.name == 'createMinecraftArtifacts') {
-        task.enabled = false
-    }
-}
-
-// ========== Проверка наличия файлов ==========
-task checkLibs {
-    doFirst {
-        println "=" * 60
-        println "ПРОВЕРКА ФАЙЛОВ В LIBS"
-        println "=" * 60
-
-        def required = [
-                'neoform-runtime-1.0.43-all.jar',
-                'jst-cli-bundle-1.0.74.jar',
-                'mergetool-1.1.7-fatjar.jar',
-                'Quack-0.4.10.101.jar',
-                'fastutil-8.3.1.jar',
-                'commons-lang3-3.9.jar',
-                'commons-compress-1.18.jar',
-                'xz-1.8.jar',
-                'asm-9.5.jar',
-                'asm-commons-9.5.jar',
-                'srgutils-0.4.15.jar',
-                'DiffPatch-2.0.0.36-all.jar'
-        ]
-
-        required.each { file ->
-            def f = file("libs/$file")
-            if (f.exists()) {
-                println "✅ $file"
-            } else {
-                println "❌ $file - ОТСУТСТВУЕТ!"
-            }
-        }
-
-        println "=" * 60
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-// Настройки для IDEA
-idea {
-    module {
-        downloadSources = false  // В офлайн режиме не качаем
-        downloadJavadoc = false
+// Отключаем задачу
+tasks.all {
+    if (it.name.contains('createMinecraftArtifacts')) {
+        it.enabled = false
     }
 }
