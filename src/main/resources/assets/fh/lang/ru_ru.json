@@ -1,5 +1,9 @@
 {
   "itemGroup.fh": "FrostHeaven",
   "block.fh.example_block": "Тестовый блок",
-  "item.fh.example_item": "Тестовый предмет"
+  "item.fh.example_item": "Тестовый предмет",
+  "item.fh.magnetite": "Магнетит",
+  "item.fh.raw_magnetite": "Сырой магнетит",
+  "item.fh.ice_shard": "Осколок льда",
+  "item.fh.voidite": "Войдит"
 }

@@ -1,5 +1,9 @@
 {
   "itemGroup.fh": "FrostHeaven",
   "block.fh.example_block": "Example Block",
-  "item.fh.example_item": "Example Item"
+  "item.fh.example_item": "Example Item",
+  "item.fh.magnetite": "Magnetite",
+  "item.fh.raw_magnetite": "Raw magnetite",
+  "item.fh.ice_shard": "Ice shard",
+  "item.fh.voidite": "Voidite"
 }
