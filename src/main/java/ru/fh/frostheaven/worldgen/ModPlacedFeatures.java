@@ -23,10 +23,10 @@ public class ModPlacedFeatures {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, ICE_ORE_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.ICE_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.absolute(-20), VerticalAnchor.absolute(80))));
+                ModOrePlacement.commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(70))));
 
         register(context, MAGNETITE_ORE_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MAGNETITE_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(192, HeightRangePlacement.uniform(VerticalAnchor.absolute(3), VerticalAnchor.absolute(125))));
+                ModOrePlacement.commonOrePlacement(128, HeightRangePlacement.uniform(VerticalAnchor.absolute(3), VerticalAnchor.absolute(125))));
 
         register(context, VOIDITE_ORE_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.VOIDITE_ORE_KEY),
                 ModOrePlacement.rareOrePlacement(4, HeightRangePlacement.uniform(VerticalAnchor.absolute(-20), VerticalAnchor.absolute(20))));

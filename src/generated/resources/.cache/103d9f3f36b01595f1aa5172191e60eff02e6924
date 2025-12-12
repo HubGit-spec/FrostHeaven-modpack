@@ -1,0 +1,10 @@
+// 1.21.1	2025-12-12T10:37:45.0175328	Registries
+52f9de06699e0e6c19cfac020238aea80d14d581 data/fh/neoforge/biome_modifier/add_ice_ore.json
+73d3da953631133a4ae7be593d0cb7d743ad0d7e data/fh/neoforge/biome_modifier/add_magnetite_ore.json
+2264267806de9bce7344d8f938847a496465a2d4 data/fh/neoforge/biome_modifier/add_voidite_ore.json
+c3922a276a0504a69ea6d3a035dd3c81544d8cec data/fh/worldgen/configured_feature/ice_ore.json
+1be31eb86799cf768463fd45ac11482ebda6e024 data/fh/worldgen/configured_feature/magnetite_ore.json
+6154a2909a75db78398cbd876e939d0b284b045d data/fh/worldgen/configured_feature/voidite_ore.json
+bbe1cb77cf490eb52e9c4ac7c5cd5d6e95603d03 data/fh/worldgen/placed_feature/ice_ore_placed.json
+69210d3ece35bb36c9d61791f6faa72d8b5082bc data/fh/worldgen/placed_feature/magnetite_ore_placed.json
+d651cfc41b247813e9a44fc15c41fa374bcd54c4 data/fh/worldgen/placed_feature/voidite_ore_placed.json

@@ -28,7 +28,7 @@ public class ModConfiguredFeatures {
         RuleTest stoneReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest deepslateReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
-        RuleTest netherrackReplaceables = new TagMatchTest(BlockTags.BASE_STONE_NETHER);
+        RuleTest netherrackReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
 
         RuleTest airReplaceables = new BlockMatchTest(Blocks.AIR);
 
@@ -37,9 +37,9 @@ public class ModConfiguredFeatures {
                 OreConfiguration.target(deepslateReplaceables, ModBlocks.ICE_DEEPSLATE_ORE.get().defaultBlockState())
         );
 
-        register(context, ICE_ORE_KEY, Feature.ORE, new OreConfiguration(iceOres, 9));
-        register(context, MAGNETITE_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplaceables,
-                ModBlocks.MAGNETITE_ORE.get().defaultBlockState(), 2));
+        register(context, ICE_ORE_KEY, Feature.ORE, new OreConfiguration(iceOres, 9, 0.5f));
+        register(context, MAGNETITE_ORE_KEY, Feature.SCATTERED_ORE, new OreConfiguration(netherrackReplaceables,
+                ModBlocks.MAGNETITE_ORE.get().defaultBlockState(), 1, 0.75f));
         register(context, VOIDITE_ORE_KEY, Feature.ORE, new OreConfiguration(airReplaceables,
                 ModBlocks.VOIDITE_ORE.get().defaultBlockState(), 9));
     }
